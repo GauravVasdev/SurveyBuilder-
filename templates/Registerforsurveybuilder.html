@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/613a7f3344.js" crossorigin="anonymous"></script>
+<style>
+  .registerdiv{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      width:40%;
+    }
+  .crossbtnndregisterinloginform{
+      position:absolute;
+      top:10px;
+      right:10px;
+      font-size:30px;
+  }
+  .loginndregisterformheading{
+      color:rgb(128,128,128);
+      font-weight: normal;
+  }
+  .btnsdiv{
+      text-align: right;
+      float:right;
+  }
+  .loginformcontainer{
+      width:100%;
+      overflow: auto;
+      background-color: white;
+    }
+  .bgimg{
+    background-image: url("{% static 'Frontpageimg.png' %}");
+    height:965px;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    background-size:100% 100%;
+  }
+</style>
+</head>
+<body>
+<div class="bgimg">
+</div>
+<div class="registerdiv">
+    <form>
+        <div class="container form-group border p-2 pt-5 pl-5 pr-5 pb-3 loginformcontainer">
+            <i class="fas fa-times crossbtnndregisterinloginform crossbtn"></i>
+            <h2 class="mb-4 loginndregisterformheading">Create an account</h2>
+            <label for="usr">Email :</label>
+            <input type="email" class="form-control mb-4 emailinregister" id="usrr" required> 
+            <label for="pswrd">Password :</label>
+            <input type="password" class="form-control mb-4 passwordofregister" id="pswrdddd" required>
+            <label for="pswrdd">Confirm Password :</label>
+            <input type="password" class="form-control confirmpasswordofregister" id="pswrdd" required>
+            <div class="mt-2 loginndregisterradiobtno">
+            <label for="position" class="mt-4 mr-3 loginndregisterradiobtnlabel">Position :</label>
+            <div class="form-check mr-4 mt-4 loginndregisterradio">
+              <label class="form-check-label" for="radio3">
+                <input type="radio" class="form-check-input" id="radio3" name="optradio" value="Administrator" required>Administrator
+              </label>
+            </div>
+            </div>
+            <div class="mt-2 mb-4 btnsdiv">
+            <button class="btn btn-secondary btn-lg mt-4 ml-3 registerbtnforregister">Register</button>
+            <button class="btn btn-secondary btn-lg mt-4 frontpagecnclbtn cnclbtn">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(".registerbtnforregister").click(function(){
+        let email=$(this).parent().parent().find(".emailinregister").val();
+        let password=$(this).parent().parent().find(".passwordofregister").val();
+        let confirmpassword=$(this).parent().parent().find(".confirmpasswordofregister").val();
+        let  radiovalue="";
+        $(this).parent().parent().find(".loginndregisterradio").find("input").each(function(){
+            if($(this).prop('checked')==true){
+              radiovalue=$(this).val();
+            }
+        });
+        if(email=="" || password=="" || confirmpassword=="" ||  radiovalue==""){
+            alert("All fields are mandatory to fill");
+            return false;
+        }
+        if(password!=confirmpassword){
+            alert("Your password confirmation is not satisfactory");
+            return false;
+        }
+        $.ajax({
+            type: 'post',
+            url: "{% url 'ajaxregisterrequest' %}",
+            data: {'Email':email,'Password':password,'Position':radiovalue},  //JSON.stringify(obj)
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            async: true,
+            success: function (response) {
+                console.log("hello");
+                window.location.href = "loginformforsurveybuilder";
+            }
+       }).done(function (data) {
+            console.log(data);
+        });
+    });
+    $(".crossbtn").click(function(){
+        window.history.back();
+      });
+      $(".cnclbtn").click(function(){
+        window.history.back();
+      });
+</script>
+</body>
+</html>

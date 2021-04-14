@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/613a7f3344.js" crossorigin="anonymous"></script>
+<style>
+    *{
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 1.5vw;
+        line-height: 1.5;
+        color: #444;
+        font-style: normal;
+    }
+    .container{
+        margin-top:100px;
+    }
+    .surveyrow{
+        height:auto;
+        background-color:white;
+        margin-bottom:10px;
+        padding:10px;
+        color: #444;
+        font-size: 1vw;
+        overflow: auto;
+    }
+    h1
+    {
+      font-size:130%;
+      color:black;
+      background-color:rgba(0,0,0,0.1);
+      box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.1);
+      font-weight: normal;
+      word-spacing: 20px;
+      line-height: 50px;
+    }
+</style>
+</head>
+<body>
+    <h1 class="pl-1 py-3"><button class="btn mr-2 btn-sm btn-info createsurveybtn" style="float:right;background-color:blue;color:white;">Create Survey<i class="fas fa-plus ml-2" style="color:white;"></i></button>Surveys</h1>
+    <div class="container-fluid  table-responsive" style="width:70%;">
+        <table style="width:100%;" class="table table-hover mt-2">     
+            <thead class="" style="border:1px solid gray;background-color:rgba(0,0,0,0.1);">
+            <tr>
+                <th style="font-size: 35px;font-weight:lighter;color:#444">Name of survey</th>
+                <th style="font-size: 35px;text-align:center;font-weight:lighter;color:#444">Operation</th>
+            </tr>
+            </thead>
+            <tbody>
+        {% for datadisplay in res %}
+                    <tr style="border:1px solid gray">
+                        <td style="width:70%;" class="Nameofsurvey">{{datadisplay.Nameofsurvey}}</td>
+                        <td>
+                            <div style="text-align:center;">
+                                <button class="btn btn-sm btn-primary Editbtn" id={{datadisplay.Formid}}>Edit</button>
+                                <button class="btn btn-primary btn-sm Deletebtn" id={{datadisplay.Formid}} value="">Delete</button>
+                                <button class="btn btn-info btn-sm Sendbtn" id={{datadisplay.Formid}} value="">Send<i class="fas fa-paper-plane ml-2 " style="color:white;"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+<script>
+    $(function(){
+        $(".Editbtn").click(function(){
+            var idofbtn=$(this).attr("id");
+            PersonID='{{PersonID}}';
+            window.location.href="/edit?PersonID="+PersonID+"&btnid="+idofbtn;
+        });
+        $(".Deletebtn").click(function(){
+            var idofbtn=$(this).attr("id");
+            $.ajax({
+                type: 'post',
+                url: "{% url 'delete' %}",
+                data: {'idofbtn':idofbtn }, 
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                async: true,
+                success: function (response) {
+                    console.log(response);
+                    if(response=="False"){
+                        console.log(response)
+                        alert("Sorry,U can't delete this row")
+                        return false;
+                    }
+                    else{
+                        console.log(response)
+                        PersonID='{{PersonID}}';
+                        window.location.href ="http://127.0.0.1:8000/abcd?id="+PersonID+"";
+                    }
+                }
+                 }).done(function (data) {
+                console.log(data);
+                });
+        });
+        $(".createsurveybtn").click(function(){
+            PersonID='{{PersonID}}';
+            window.location.href="/gh?PersonID="+PersonID+"";
+        });
+        $(".Sendbtn").click(function(){
+            var PersonID='{{PersonID}}';
+            var idofbtn=$(this).attr("id");
+            var mail=prompt("Enter an email for send the form");
+            if(mail==null|| mail==""){
+                alert("Please enter a valid email");
+                return false;
+            }
+            var nameofsurvey=$(this).parent().parent().parent().find(".Nameofsurvey").text();
+            $.ajax({
+                type: 'post',
+                url: "{% url 'sendmail' %}",
+                data: {'idofbtn':idofbtn,'mail':mail,'Nameofsurvey':nameofsurvey,'PersonID':PersonID}, 
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                async: true,
+                success: function (response) {
+                    console.log(response);
+                }
+                 }).done(function (data) {
+                console.log(data);
+                });
+        });
+    });
+</script>
+</body>
+</html>

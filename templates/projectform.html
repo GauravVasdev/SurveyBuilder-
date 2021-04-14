@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/613a7f3344.js" crossorigin="anonymous"></script>
+  <style>
+    *{
+        box-sizing: border-box;
+font-family: 'Roboto', sans-serif;
+-webkit-font-smoothing: antialiased;
+font-size: 1vw;
+line-height: 1.5;
+color: #444;
+font-style: normal;
+font-weight:lighter;
+}
+body,html{
+height:100%;
+margin: 0;
+padding:0;
+font-size:2vw;
+font-family: 'Roboto', sans-serif;
+-webkit-font-smoothing: antialiased;
+}
+h1
+{
+font-size:100%;
+color: black;
+background-color:rgba(1,1,1,0.2);
+}
+ul
+{
+list-style: none;
+display:block;
+border:1px solid #444;
+}
+.li-common
+{
+font-family: 'Roboto', sans-serif;
+-webkit-font-smoothing: antialiased;
+font-size: 1vw;
+line-height: 1.5;
+color: #444;
+font-style: normal;
+z-index: 1;
+padding:10px;
+border-bottom:1px solid #444;
+cursor: all-scroll;
+}
+ul li:last-child {
+  border-bottom: none
+}
+#droppable{
+padding:10px;
+}
+.lefttemplateclass
+{
+height:auto;
+}
+.righttemplateclass
+{
+height:auto;
+border:1px solid rgba(0,0,0,0.1); 
+
+}
+.formwrapper{
+position:relative;
+padding:30px;
+background-color:white;
+margin:0;
+}
+.editicon{
+position:absolute;
+right:10px;
+top:10px;
+font-size: 20px;
+}
+.crossicon{
+position:absolute;
+right:40px;
+top:10px;
+font-size: 25px;
+}
+.btn-common-class{
+float:right;
+font-size:0.8vw;
+border-radius: 2px;
+padding:8px;
+color:#444;
+background-color: rgba(0,0,0,0.1);
+box-shadow: 2px 2px 2px;
+}
+.formwrapper input{
+border:1px solid #444;
+}
+.sideformclass input{
+border:1px solid #444;
+border-radius: 4px;
+width:70%;
+}
+.col-md-7{
+padding:0;
+}
+.sideformclass label{
+font-weight:lighter;
+width:20%;
+}
+table, td, th {
+border: 1px solid rgba(0,0,0,0.2);
+}
+.handle:hover{
+cursor: all-scroll;
+}
+#pagesavebtn{
+  font-size:1.1vw;
+  border-radius: 2px;
+  padding:5px;
+  color:black;
+  background-color: rgba(125,125,125,0.1);
+  box-shadow: 2px 2px 2px 2px;
+  position:relative;
+  top:10px;
+  left:1010px;
+  width:10%;
+  font-weight: normal;
+}
+.form-control{
+  font-size: 1.3vw;
+  padding:5px;
+  height:50px;
+ }
+  </style>
+</head>
+<body>
+    <h1 class="pl-1 py-3">Survey Builder</h1>
+<div class="container ml-1 pt-1">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" style="height:50px;font-size:1.3vw;">Enter your survey name</span>
+    </div>
+    <input type="text" class="form-control" placeholder="" id="sname" name="surveyname" value="{{nameofsurvey}}">
+  </div>
+  <div class="row">
+    <div class="col-4 lefttemplateclass">
+      <ul class="list-group" style="border-radius: 0px;">
+        <li class="text-nowrap li-common" id="id-no-1"><i class="fas fa-magic p-1"></i>Autocomplete</li>
+        <li class="text-nowrap li-common" id="id-no-2"><i class="fas fa-box p-1"></i>Button</li>
+        <li class="text-nowrap li-common" id="id-no-3"><i class="fas fa-list-ul p-1"></i>Checkbox</li>
+        <li class="text-nowrap li-common" id="id-no-4"><i class="fas fa-calendar-alt p-1"></i>Date field</li>
+        <li class="text-nowrap li-common" id="id-no-5"><i class="fas fa-file-upload p-1"></i>File Upload</li>
+        <li class="text-nowrap li-common" id="id-no-6"><i class="fas fa-heading p-1"></i>Header</li>
+        <li class="text-nowrap li-common" id="id-no-7"><i class="fas fa-eye-slash p-1"></i>Range</li>
+        <li class="text-nowrap li-common" id="id-no-8"><i class="fas fa-hashtag p-1"></i>Number</li>
+        <li class="text-nowrap li-common" id="id-no-9"><i class="fas fa-paragraph p-1"></i>Paragraph</li>
+        <li class="text-nowrap li-common" id="id-no-10"><i class="fas fa-list-ul p-1"></i>Radio Group</li>
+        <li class="text-nowrap li-common" id="id-no-11"><i class="far fa-object-ungroup p-1"></i>Select</li>
+        <li class="text-nowrap li-common" id="id-no-12"><i class="fas fa-text-width p-1"></i>Text Field</li>
+        <li class="text-nowrap li-common" id="id-no-13"><i class="fas fa-envelope-open-text p-1"></i>Text Area</li>
+      </ul>
+    </div>
+    <div class="col-8 righttemplateclass" id="droppable">
+      {% for obj_ in listofcontent %}
+        {% if obj_.type == "Autocomplete" %}
+          <div class="row" style="padding:10px;">
+            <div class="col-12">
+                <div class="formwrapper">
+                <form class="formclass" name="autocompleteform">
+                  <label for="autocomplete-field" class="labelclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+                  <input list="autocomplete-list" name="autocomplete-field" id="autocomplete-field" 
+                  class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}}" {% endif %} {% endfor %}
+                  placeholder={% for key,value in obj_.items %}{% if key == "placeholder" %} "{{value}}" {% endif %} {% endfor %}
+                  {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+                  autocomplete="on">
+
+                  <i class="editicon"></i>
+                  <i class="crossicon"></i>
+                  <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+                </form>
+                </div>
+            </div>
+            <div class="col-12 sideformclass pb-1" style="display:none;">
+            <div style="padding:25px;">
+                  <form>
+                  <label for="labelfield">Label :</label>
+                  <input type="text" id="labelfield" name="labelfield" class="inputlabelfield" placeholder=""><br>
+                  <label for="requirefield">Required :</label> 
+                  <input type="checkbox" id="requirefield" name="requirefield" style="width:10%" class="checkboxfield"><br>
+                  <label for="placeholderfield">Placeholder :</label>
+                  <input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>  
+                  <label for="classfield">Class :</label>
+                  <input type="text" id="classfield" name="classfield" class="mt-1 classesfield">  
+                  </form>
+              <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+              <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>
+              <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+            </div>
+            </div>
+            </div>
+            {% endif %}
+        {% if obj_.type == "Button" %}
+          <div class="row" style="padding:10px;">
+            <div class="col-12">
+            <div class="formwrapper">
+            <form class="formclass" name="buttonform">
+              <button 
+              type={% for key,value in obj_.items %}{% if key == "type" %} "{{value}}" {% endif %} {% endfor %}
+              value={% for key,value in obj_.items %}{% if key == "value" %} "{{value}}" {% endif %} {% endfor %}
+              class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} inputclass txtclass" {% endif %} {% endfor %}>{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</button><br>
+              <i class="editicon"></i>
+              <i class="crossicon"></i>
+              <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+            </form>
+            </div>
+          </div>
+          <div class="col-12 sideformclass pb-1" style="display:none;">
+          <div style="padding:25px;">
+                <form>
+                <label for="labelfield">Label :</label>
+                <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+                <label for="btnvaluefield" class="mt-1">Value :</label>
+                <input type="text" id="btnvaluefield" name="btnvaluefield" class="btnvalfield"><br>
+                <label for="btntype" class="mt-1">Type :</label>
+                  <select name="btntype" id="btntype" class="btntypeval">
+                    <option value="Submit">Submit</option>
+                    <option value="Reset">Reset</option>
+                    <option value="Button">Button</option>
+                  </select><br>
+                <label for="classfield">Class :</label>
+                <input type="text" id="classfield" name="classfield" class="mt-0 classesfield"> 
+                </form>
+            <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+            <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>
+            <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+          </div>
+          </div>
+          </div>
+      {% endif %}
+      {% if obj_.type == "Checkbox" %}
+      <div class="row checkboxclass" style="padding:10px;">
+        <div class="col-12">
+        <div class="formwrapper">
+        <form class="formclass" name="checkboxform">
+          <label class="labelclass checkboxclass txtclass">{% for key,value in obj_.items%}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+          <i class="editicon"></i>
+          <i class="crossicon"></i>
+          <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+        </form>
+        <div style="height:auto;" class="labelvaluepaircontainer">
+          {% for key,value in obj_.items %}
+            {% if key == "labelvaluepairobj" %}
+              {% for keys,values in obj_.labelvaluepairobj.items %}
+                <input type="checkbox" id="checkboxfield" value="{{values}}" class="mr-1 checkboxinputfield">
+                <label for="checkboxfield" class="formlabelfield checkboxlabelfield">{{keys}}</label><br>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-12 sideformclass pb-1" style="display:none;">
+    <div style="padding:25px;">
+    <form>
+          <label for="labelfield">Label :</label>
+          <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+          <form>
+          <label style="display:inline-block; vertical-align: top;" class="mt-2">Options :
+          </label>
+          <table class="d-inline-block mt-1 tableclass" style="padding:4px;" id = "collapseTable">
+          <tr>
+          <th>Name</th>
+          <th>Value</th>
+          </tr>
+          <tr>
+          <td><input type="text" class="w-100 border inputnameclass"></td>
+          <td><input type="text" class="w-100 border inputvalueclass"></td>
+          </tr>
+          <tr>
+          <td><input type="text" class="w-100 border inputnameclass"></td>
+          <td><input type="text" class="w-100 border inputvalueclass"></td>
+          </tr>
+          </table>
+          </form>
+          <i class="fas fa-plus addoption" style="position:absolute;bottom:80px;right:60px;font-size:20px;box-shadow:2px 2px 2px 2px rgba(0,0,0,0.1);"></i>
+      <button type="button" class="btn mt-1 btn-common-class closebtn mt-1">Close</button>
+      <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn mt-1">Clear</button>
+      <button type="button" class="btn mt-1  btn-common-class savebtn mt-1">Save</button>
+    </div>
+    </div>
+    </div>
+    {% endif %}
+    {% if obj_.type == "Datefield" %}
+        <div class="row" style="padding:10px;"> 
+          <div class="col-12">
+            <div class="formwrapper">
+          <form class="formclass" name="Datefieldform">
+            <label for="date-field" class="labelclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+            <input type="date" name="date" id="date-field" 
+            class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} date-field inputclass" {% endif %} {% endfor %}
+            {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}>
+            <i class="editicon"></i>
+            <i class="crossicon"></i>
+          <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+          </form>
+            </div>
+          </div>
+          <div class="col-12 sideformclass pb-1" style="display:none;">
+           <div style="padding:25px;">
+            <form>
+          <label for="labelfield">Label :</label>
+          <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+          <label for="requirefield">Required :</label>
+          <input type="checkbox" id="requirefield" name="requirefield" class="checkboxfield" style="width:10%"><br>
+          <label for="classfield">Class :</label>
+          <input type="text" id="classfield" name="classfield" class="classesfield">
+            </form>
+            <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+            <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>
+            <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+          </div>
+          </div>
+          </div>
+        {% endif %}
+      {% if obj_.type == "Filefield" %}
+        <div class="row" style="padding:10px;">
+          <div class="col-12">
+          <div class="formwrapper">
+          <form class="formclass" name="fileuploadform">
+            <label for="file-field" class="labelclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+            <input type="file" name="file" id="file-field"
+            class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} file-field inputclass" {% endif %} {% endfor %}
+            {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}>
+            <i class="editicon"></i>
+            <i class="crossicon"></i>
+            <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+          </form>
+          </div>
+      </div>
+      <div class="col-12 sideformclass pb-1" style="display:none;">
+      <div style="padding:25px;">
+            <form>
+            <label for="labelfield">Label :</label>
+            <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+            <label for="requirefield">Required :</label>
+            <input type="checkbox" id="requirefield" name="requirefield" class="checkboxfield" style="width:10%"><br>
+            <label for="classfield">Class :</label>
+            <input type="text" id="classfield" name="classfield" class="classesfield">
+            </form>
+        <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+        <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>
+        <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+      </div>
+      </div>
+      </div>
+      {% endif %}
+      {% if obj_.type == "Headerfield" %}
+      <div class="row" style="padding:10px;">
+        <div class="col-12">
+        <div class="formwrapper">
+        <form class="formclass" name="headerform">
+          <h1 class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} labelclass txtclass inputclass" {% endif %} {% endfor %}
+          style="font-size:40px;background-color:inherit;padding:10;margin:0;color: #444;">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</h1><br>
+          <i class="editicon"></i>
+          <i class="crossicon"></i>
+          <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+        </form>
+        </div>
+    </div>
+    <div class="col-12 sideformclass pb-1" style="display:none;">
+    <div style="padding:25px;">
+          <form>
+          <label for="labelfield">Label :</label>  
+          <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+          <label for="classfield">Class :</label> 
+          <input type="text" id="classfield" name="classfield" class="mt-1 classesfield">  
+          </form>
+      <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+      <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>
+      <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+    </div>
+    </div>
+    </div>
+      {% endif %}
+      
+      {% if obj_.type == "Rangefield" %}
+      <div class="row" style="padding:10px;">
+        <div class="col-12">
+        <div class="formwrapper">
+        <form class="formclass" name="rangeform">
+          <label for="range-field" class="labelclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+          <input type="range" name="range" id="range-field" class="rangeclass inputclass" min={% for key,value in obj_.items %}{% if key == "min" %} "{{value}}" {% endif %} {% endfor %}
+          max={% for key,value in obj_.items %}{% if key == "max" %} "{{value}}" {% endif %} {% endfor %}>
+          <i class="editicon"></i>
+          <i class="crossicon"></i>
+          <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+        </form>
+        </div>
+    </div>
+    <div class="col-12 sideformclass pb-1" style="display:none;">
+    <div style="padding:25px;">
+          <form>
+          <label for="labelfield">Label :</label>
+          <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+          <label for="minfield">Min :</label>
+          <input type="number" id="minfield" name="minfield" class="minfield"><br>
+          <label for="maxfield">Max :</label>
+          <input type="number" id="maxfield" name="maxfield" class="maxfield"><br>
+          </form>
+      <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+      <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>
+      <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+    </div>
+    </div>
+    </div>
+      {% endif %}
+      {% if obj_.type == "Numberfield" %}
+      <div class="row" style="padding:10px;">
+        <div class="col-12">
+            <div class="formwrapper">
+            <form class="formclass" name="numberform">
+              <label for="number-field" class="labelclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+              <input type="number" name="number" id="number-field" class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} number-field inputclass" {% endif %} {% endfor %}
+              placeholder={% for key,value in obj_.items %}{% if key == "placeholder" %} "{{value}}" {% endif %} {% endfor %}
+              {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+              >
+              <i class="editicon"></i>
+              <i class="crossicon"></i>
+              <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+            </form>
+            </div>
+        </div>
+        <div class="col-12 sideformclass pb-1" style="display:none;">
+        <div style="padding:25px;">
+              <form>
+              <label for="labelfield">Label :</label>  
+              <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+              <label for="requirefield">Required :</label>
+              <input type="checkbox" id="requirefield" name="requirefield" class="checkboxfield" style="width:10%"><br>
+              <label for="placeholderfield">Placeholder :</label>
+              <input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br> 
+              <label for="classfield">Class :</label> 
+              <input type="text" id="classfield" name="classfield" class="mt-1 classesfield"> 
+              </form>
+          <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+          <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button> 
+          <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button> 
+        </div>
+        </div> 
+        </div>
+      {% endif %}
+      {% if obj_.type == "Paragraphfield" %}
+      <div class="row" style="padding:10px;">
+        <div class="col-12">
+            <div class="formwrapper">
+            <form class="formclass" name="paragraphform">
+              <p style="margin:0;height:auto;word-wrap: break-word;padding:30px;"
+              class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} labelclass txtclass" {% endif %} {% endfor %}
+              >{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</p><br>
+              <i class="editicon"></i>
+              <i class="crossicon"></i>
+              <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+            </form>
+            </div>
+        </div>
+        <div class="col-12 sideformclass pb-1" style="display:none;">
+        <div style="padding:25px;">
+              <form>
+              <label for="labelfield" style="vertical-align: top;">Content :</label>
+              <textarea class="inputlabelfield" rows="4" cols="50"></textarea><br>
+              <label for="requirefield">Required :</label>
+              <input type="checkbox" id="requirefield" name="requirefield" style="width:10%" class="checkboxfield"><br>
+              <label for="placeholderfield">Placeholder :</label>
+              <input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>
+              <label for="classfield">Class :</label>
+              <input type="text" id="classfield" name="classfield" class="mt-1 classesfield">
+              </form>
+          <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+          <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>
+          <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+        </div>
+        </div>
+        </div>
+      {% endif %}
+      {% if obj_.type == "Radiofield" %}
+      <div class="row radiobtnclass" style="padding:10px;">
+        <div class="col-12">
+        <div class="formwrapper">
+        <form class="formclass" name="radiogroupform">
+          <label class="labelclass radiobtnclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+          <i class="editicon"></i>
+          <i class="crossicon"></i>
+          <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+        </form>
+        <div style="height:auto;" class="labelvaluepaircontainer">
+          {% for key,value in obj_.items %}
+            {% if key == "labelvaluepairobj" %}
+              {% for keys,values in obj_.labelvaluepairobj.items %}
+                  <input type="radio" id="radioboxfield" value="{{values}}" class="mr-1 radiobtninputfield">
+                  <label for="radioboxfield" class="formlabelfield radiobtnlabelfield">{{keys}}</label><br>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        </div>
+      </div>
+      <div class="col-12 sideformclass pb-1" style="display:none;">
+      <div style="padding:25px;">
+      <form>
+            <label for="labelfield">Label :</label>
+            <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+            <form>
+            <label style="display:inline-block; vertical-align: top;" class="mt-2">Options :
+            </label>
+            <table class="d-inline-block mt-1 tableclass" style="padding:4px;" id = "collapseTable">
+            <tr>
+            <th>Name</th>
+            <th>Value</th>
+            </tr>
+            <tr>
+            <td><input type="text" class="w-100 border inputnameclass"></td>
+            <td><input type="text" class="w-100 border inputvalueclass"></td>
+            </tr>
+            <tr>
+            <td><input type="text" class="w-100 border inputnameclass"></td>
+            <td><input type="text" class="w-100 border inputvalueclass"></td>
+            </tr>
+            </table>
+            </form>
+            <i class="fas fa-plus addoption" style="position:absolute;bottom:80px;right:60px;font-size:20px;box-shadow:2px 2px 2px 2px rgba(0,0,0,0.1);"></i>
+        <button type="button" class="btn mt-1 btn-common-class closebtn mt-1">Close</button>
+        <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn mt-1">Clear</button>
+        <button type="button" class="btn mt-1  btn-common-class savebtn mt-1">Save</button>
+      </div>
+      </div>
+      </div>
+      {% endif %}
+      {% if obj_.type == "Selectfield" %}
+      <div class="row selectboxclass" style="padding:10px;">
+        <div class="col-12">
+        <div class="formwrapper">
+        <form class="formclass" name="selectform">
+          <label for="select-field" class="labelclass selectboxclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+          <i class="editicon"></i>
+          <i class="crossicon"></i>
+          <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+        </form>
+        <div style="height:auto;">
+        <select name="select-field" id="select-field" style="width:30%;"
+        class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} selectfieldclass" {% endif %} {% endfor %}
+        >
+        {% for key,value in obj_.items %}
+            {% if key == "labelvaluepairobj" %}
+              {% for keys,values in obj_.labelvaluepairobj.items %}
+              <option value="{{values}}" class="optionfield">{{keys}}</option>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </select>
+        </div>
+        </div>
+      </div>
+      <div class="col-12 sideformclass pb-1" style="display:none;">
+      <div style="padding:25px;">
+      <form>
+            <label for="labelfield">Label :</label>
+            <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+            <label for="classfield">Class :</label> 
+            <input type="text" id="classfield" name="classfield" class="mt-1 classesfield">
+            <form>
+            <label style="display:inline-block; vertical-align: top;" class="mt-2">Options :
+            </label>
+            <table class="d-inline-block mt-1 tableclass" style="padding:4px;" id = "collapseTable">
+            <tr>'+
+            <th>Name</th>
+            <th>Value</th>
+            </tr>
+            <tr>
+            <td><input type="text" class="w-100 border inputnameclass" ></td>
+            <td><input type="text" class="w-100 border inputvalueclass" ></td>
+            </tr>
+            <tr>
+            <td><input type="text" class="w-100 border inputnameclass" ></td>
+            <td><input type="text" class="w-100 border inputvalueclass"></td>
+            </tr>
+            </table>
+            </form>
+            <i class="fas fa-plus addoption" style="position:absolute;bottom:80px;right:60px;font-size:20px;box-shadow:2px 2px 2px 2px rgba(0,0,0,0.1);"></i>
+        <button type="button" class="btn mt-1 btn-common-class closebtn mt-1">Close</button>
+        <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn mt-1">Clear</button>
+        <button type="button" class="btn mt-1  btn-common-class savebtn mt-1">Save</button>
+      </div> 
+      </div> 
+      </div>
+      {% endif %}
+      {% if obj_.type == "textfield" %}
+      <div class="row" style="padding:10px;">
+        <div class="col-12">
+            <div class="formwrapper">
+            <form class="formclass" name="textfieldform">
+              <label for="textfield" class="labelclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+              <input type="text" name="textfield" id="textfield"
+              class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} inputclass" {% endif %} {% endfor %}
+              placeholder={% for key,value in obj_.items %}{% if key == "placeholder" %} "{{value}}" {% endif %} {% endfor %}
+              {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+              >
+              <i class="editicon"></i>
+              <i class="crossicon"></i>
+              <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+            </form>
+            </div>
+        </div>
+        <div class="col-12 sideformclass pb-1" style="display:none;">
+        <div style="padding:25px;">
+              <form>
+              <label for="labelfield">Label :</label>
+              <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+              <label for="requirefield">Required :</label>
+              <input type="checkbox" id="requirefield" name="requirefield" style="width:10%" class="checkboxfield"><br>
+              <label for="placeholderfield">Placeholder :</label>
+              <input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>
+              <label for="classfield">Class :</label>
+              <input type="text" id="classfield" name="classfield" class="mt-1 classesfield">
+              </form>
+          <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button> 
+          <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button> 
+          <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+        </div>
+        </div>
+        </div>
+      {% endif %}
+      {% if obj_.type == "textareafield" %}
+      <div class="row" style="padding:10px;">
+        <div class="col-12">
+            <div class="formwrapper">
+            <form class="formclass" name="textareaform">
+              <label for="textarea-field" class="labelclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+              <textarea rows="4" cols="50"
+              class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} inputclass" {% endif %} {% endfor %}
+              placeholder={% for key,value in obj_.items %}{% if key == "placeholder" %} "{{value}}" {% endif %} {% endfor %}
+              {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+              ></textarea>
+              <i class="editicon"></i>
+              <i class="crossicon"></i>
+              <i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>
+            </form>
+            </div>
+        </div>
+        <div class="col-12 sideformclass pb-1" style="display:none;">
+        <div style="padding:25px;">
+              <form>
+              <label for="labelfield">Label :</label>
+              <input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>
+              <label for="requirefield">Required :</label>
+              <input type="checkbox" id="requirefield" name="requirefield" style="width:10%" class="checkboxfield"><br>
+              <label for="placeholderfield">Placeholder :</label>
+              <input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>  
+              <label for="classfield">Class :</label>'+  
+              <input type="text" id="classfield" name="classfield" class="mt-1 classesfield">
+              </form>'+ 
+          <button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>
+          <button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>
+          <button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>
+        </div> 
+        </div> 
+        </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <button id="pagesavebtn" value="abc">Save</button>
+</div>
+<script>
+  var variable=1;
+    $( function() {
+      droppabledata();
+        $( "#id-no-1,#id-no-2,#id-no-3,#id-no-4,#id-no-5,#id-no-6,#id-no-7,#id-no-8,#id-no-9,#id-no-10,#id-no-11,#id-no-12,#id-no-13" ).
+        draggable({helper: "clone" ,revert: "invalid" });
+        $( "#droppable" ).droppable({
+          drop: function( event, ui ) {
+            var idofdroppable = ui.draggable.attr("id");
+            var type=variable;
+            var obj={};
+            obj[type]=$("#"+idofdroppable).text();
+            variable=variable+1;
+            $(this).sortable({opacity: 0.6,
+              handle: '.handle',
+            cursor: 'move'});
+             // var idofdroppable = ui.draggable.attr("id");
+              toShowData(idofdroppable);
+              droppabledata();
+                   
+          }});
+      $("#pagesavebtn").click(function(){  
+        if($("#sname").val()==""){
+          alert("Survey name is mandatory");
+          return false;
+        }
+
+        var contentlist=[];
+        $('#droppable').find(".formclass").each(function(){
+          if($(this).attr("name")=="autocompleteform" && $(this).parent().parent().parent().is(":visible")){
+            let label=$(this).find(".labelclass").text();
+            let classes=$(this).find(".inputclass").attr("class");
+            let placeholder=$(this).find(".inputclass").attr("placeholder");
+            var required;
+            if($(this).find(".inputclass").attr("required")!=undefined){
+               required="yes";
+            }
+            else{
+                required="no";
+            }
+            contentlist.push({"type":"Autocomplete","label":label,"classes":classes,"placeholder":placeholder,"required":required})
+            //contentobj["Autocomplete"]["classes"]=classes;
+           // contentobj["Autocomplete"]["placeholder"]=placeholder;
+           // contentobj["Autocomplete"]["required"]=required;
+           // console.log(contentobj);
+          }
+          if($(this).attr("name")=="buttonform" && $(this).parent().parent().parent().is(":visible")){
+            let label=$(this).find(".btnclass").text();
+            let value=$(this).find(".btnclass").attr("value");
+            let type=$(this).find(".btnclass").attr("type");
+            let classes=$(this).find(".btnclass").attr("class");
+            contentlist.push({"type":"Button","label":label,"classes":classes,"value":value,"Type":type});
+            //contentobj["Button"]["value"]=value;
+            //contentobj["Button"]["type"]=type;
+            //contentobj["Button"]["classes"]=classes;
+            //console.log(contentobj);
+          }
+          if($(this).attr("name")=="checkboxform" && $(this).parent().parent().parent().is(":visible")){
+            let labelvalue=[];
+            let value=[];
+            let labelvaluepairobj={};
+            let label=$(this).find(".labelclass").text();
+            $(this).parent().find(".labelvaluepaircontainer").find(".checkboxlabelfield").each(function(){
+                labelvalue.push($(this).text());
+            });
+            $(this).parent().find(".labelvaluepaircontainer").find(".checkboxinputfield").each(function(){
+              value.push($(this).attr("value"));
+          });
+          for(let i=0;i<labelvalue.length;i++){
+            labelvaluepairobj[labelvalue[i]]=value[i];
+          }
+          contentlist.push({"type":"Checkbox","label":label,"labelvaluepairobj":labelvaluepairobj});
+          //contentobj["Checkbox"]["label"]=label;
+          //contentobj["Checkbox"]["labelvaluepairobj"]=labelvaluepairobj;
+          //console.log(labelvaluepairobj);
+          }
+          if($(this).attr("name")=="Datefieldform" && $(this).parent().parent().parent().is(":visible")){
+              let label=$(this).find(".labelclass").text();
+              let classes=$(this).find(".inputclass").attr("class");
+              let required;
+              if($(this).find(".inputclass").attr("required")!=undefined){
+                required="yes";
+              }
+              else{
+                 required="no";
+              }
+              contentlist.push({"type":"Datefield","label":label,"required":required,"classes":classes});
+              //contentobj["Datefield"]["label"]=label;
+              //contentobj["Datefield"]["required"]=required;
+              //contentobj["Datefield"]["classes"]=classes;
+          }
+          if($(this).attr("name")=="fileuploadform" && $(this).parent().parent().parent().is(":visible")){
+            let label=$(this).find(".labelclass").text();
+            let classes=$(this).find(".inputclass").attr("class");
+            let required;
+            if($(this).find(".inputclass").attr("required")!=undefined){
+              required="yes";
+            }
+            else{
+               required="no";
+            }
+            contentlist.push({"type":"Filefield","label":label,"required":required,"classes":classes});
+            //contentobj["Filefield"]["required"]=required;
+            //contentobj["Filefield"]["classes"]=classes;
+        }                                                                                             
+        if($(this).attr("name")=="headerform" && $(this).parent().parent().parent().is(":visible")){
+          //contentobj["Headerfield"]={};
+          let label=$(this).find(".labelclass").text();
+          let classes=$(this).find(".inputclass").attr("class");
+          contentlist.push({"type":"Headerfield","label":label,"classes":classes});
+          //contentobj["Headerfield"]["label"]=label;
+          //contentobj["Headerfield"]["classes"]=classes;
+        }
+        if($(this).attr("name")=="rangeform" && $(this).parent().parent().parent().is(":visible")){
+          //contentobj["Rangefield"]={};
+          let label=$(this).find(".labelclass").text();
+          let min=$(this).find(".inputclass").attr("min");
+          let max=$(this).find(".inputclass").attr("max");
+          contentlist.push({"type":"Rangefield","label":label,"min":min,"max":max});
+          //contentobj["Rangefield"]["label"]=label;
+         // contentobj["Rangefield"]["min"]=min;
+         // contentobj["Rangefield"]["max"]=max;
+         // console.log(contentobj);
+        }
+        if($(this).attr("name")=="numberform" && $(this).parent().parent().parent().is(":visible")){
+          //contentobj["Numberfield"]={};
+          let label=$(this).find(".labelclass").text();
+          let classes=$(this).find(".inputclass").attr("class");
+          let placeholder=$(this).find(".inputclass").attr("placeholder");
+          let required;
+          if($(this).find(".inputclass").attr("required")!=undefined){
+              required="yes";
+          }
+          else{
+              required="no";
+          }
+          contentlist.push({"type":"Numberfield","label":label,"required":required,"placeholder":placeholder,"classes":classes});
+          //contentobj["Numberfield"]["label"]=label;
+          //contentobj["Numberfield"]["required"]=required;
+          //contentobj["Numberfield"]["placeholder"]=placeholder;
+          //contentobj["Numberfield"]["classes"]=classes;
+        }
+        if($(this).attr("name")=="paragraphform" && $(this).parent().parent().parent().is(":visible")){
+          //contentobj["Paragraphfield"]={};
+          let label=$(this).find(".labelclass").text();
+          let classes=$(this).find(".labelclass").attr("class");
+          let required;
+          if($(this).find(".labelclass").attr("required")!=undefined){
+              required="yes";
+          }
+          else{
+              required="no";
+          }
+          contentlist.push({"type":"Paragraphfield","label":label,"required":required,"classes":classes});
+          //contentobj["Paragraphfield"]["label"]=label;
+          //contentobj["Paragraphfield"]["required"]=required;
+          //contentobj["Paragraphfield"]["classes"]=classes;
+        }
+
+        if($(this).attr("name")=="radiogroupform" && $(this).parent().parent().parent().is(":visible")){
+          //contentobj["Radiofield"]={};
+          let labelvalue=[];
+          let value=[];
+          let labelvaluepairobj={};
+          let label=$(this).find(".labelclass").text();
+          $(this).parent().find(".labelvaluepaircontainer").find(".radiobtnlabelfield").each(function(){
+              labelvalue.push($(this).text());
+          });
+          $(this).parent().find(".labelvaluepaircontainer").find(".radiobtninputfield").each(function(){
+            value.push($(this).attr("value"));
+        });
+        for(let i=0;i<labelvalue.length;i++){
+          labelvaluepairobj[labelvalue[i]]=value[i];
+        }
+        //console.log(labelvaluepairobj)
+        contentlist.push({"type":"Radiofield","label":label,"labelvaluepairobj":labelvaluepairobj});
+        //contentobj["Radiofield"]["label"]=label;
+        //contentobj["Radiofield"]["labelvaluepairobj"]=labelvaluepairobj;
+        }
+        if($(this).attr("name")=="selectform" && $(this).parent().parent().parent().is(":visible")){
+          //contentobj["Selectfield"]={};
+          let labelvaluepairobj={}
+          let label=$(this).find(".labelclass").text();
+          let classes=$(this).parent().find(".selectfieldclass").attr("class");
+          $(this).parent().find(".selectfieldclass").find(".optionfield").each(function(){
+            var optionfields=$(this);
+            console.log(optionfields.html());
+            labelvaluepairobj[optionfields.attr("value")]=optionfields.attr("value");
+          })
+          contentlist.push({"type":"Selectfield","label":label,"labelvaluepairobj":labelvaluepairobj,"classes":classes});
+          //contentobj["Selectfield"]["label"]=label;
+          //contentobj["Selectfield"]["labelvaluepairobj"]=labelvaluepairobj;
+          //contentobj["Selectfield"]["classes"]=classes;
+        }
+
+        if($(this).attr("name")=="textfieldform" && $(this).parent().parent().parent().is(":visible")){
+          //contentobj["textfield"]={};
+          let label=$(this).find(".labelclass").text();
+          let classes=$(this).find(".inputclass").attr("class");
+          let placeholder=$(this).find(".inputclass").attr("placeholder");
+          let required;
+          if($(this).find(".inputclass").attr("required")!=undefined){
+               required="yes";
+          }
+          else{
+                required="no";
+            }
+            contentlist.push({"type":"textfield","label":label,"required":required,"placeholder":placeholder,"classes":classes});
+            //contentobj["textfield"]["label"]=label;
+            //contentobj["textfield"]["required"]=required;
+            //contentobj["textfield"]["placeholder"]=placeholder;
+            //contentobj["textfield"]["classes"]=classes;
+        }
+
+        if($(this).attr("name")=="textareaform" && $(this).parent().parent().parent().is(":visible")){
+          //contentobj["textareafield"]={};
+          let label=$(this).find(".labelclass").text();
+          let classes=$(this).find(".inputclass").attr("class");
+          let placeholder=$(this).find(".inputclass").attr("placeholder");
+          let required;
+          if($(this).find(".inputclass").attr("required")!=undefined){
+               required="yes";
+          }
+          else{
+                required="no";
+            }
+            contentlist.push({"type":"textareafield","label":label,"required":required,"placeholder":placeholder,"classes":classes});
+            //contentobj["textareafield"]["label"]=label;
+            //contentobj["textareafield"]["required"]=required;
+            //contentobj["textareafield"]["placeholder"]=placeholder;
+            //contentobj["textareafield"]["classes"]=classes;
+        }
+        console.log(contentlist);
+        });
+
+        contentarray=[];   
+        var surveyname=$("#sname").val();
+        $('#droppable').find(".formclass").each(function(){
+          contentarray.push($(this).attr("name"));
+        });
+        $.ajax({
+          type: 'post',
+          url: "{% url 'ajaxform' %}",
+          data: {'pagecontent':JSON.stringify(contentarray),'nameofsurvey':surveyname,'contentattrandvalues':JSON.stringify(contentlist),'PersonId':'{{PersonId}}','idofform':'{{id}}' },  //JSON.stringify(obj)
+          headers: {'X-CSRFToken': '{{ csrf_token }}'},
+          async: true,
+          success: function (response) {
+              console.log(response);
+              id_='{{PersonId}}'
+              window.location.href = "http://127.0.0.1:8000/abcd?id="+id_+"";
+          }
+     }).done(function (data) {
+          console.log(data);
+      });
+     });
+    });
+function droppabledata(){
+  $("#droppable").sortable({opacity: 0.6,
+    handle: '.handle',
+  cursor: 'move'});
+$(".crossicon").click(function(){
+      $(this).parent().parent().parent().parent().hide();
+});
+$(".editicon").click(function(){
+$(this).parent().parent().parent().parent().find(".sideformclass").show();
+$(this).removeClass("fas fa-pen");
+$(this).addClass("fa fa-hand-o-down");
+});
+$(".closebtn").click(function(){
+$(this).parent().parent().hide();
+$(this).parent().parent().parent().find(".editicon").removeClass(" fa fa-hand-o-down");
+});
+$(".formwrapper").hover(function(){
+$(this).find(".editicon").addClass("fas fa-pen");
+$(this).find(".crossicon").addClass("fas fa-times");
+$(this).css("background-color", "rgba(0,0,0,0.1)");
+},function(){
+$(this).find(".editicon").removeClass("fas fa-pen");
+$(this).find(".crossicon").removeClass("fas fa-times");
+$(this).css("background-color","white");
+});
+$(".sideformclass").mouseenter(function() {
+$(this).css({"background-color":"rgba(0,0,0,0.1)"})
+}).mouseleave(function(){
+$(this).css({"background-color":"rgba(0,0,0,0)"});
+});
+$(".editicon,.crossicon").mouseenter(function() {
+$(this).css({"border":"1px solid rgba(0,0,0,0.6)","box-shadow":"1px 1px 1px rgba(0,0,0,0.5)","padding":"2px"})
+}).mouseleave(function(){
+$(this).css({"box-shadow":"0px 0px 0px 0px","border":"1px solid rgba(0,0,0,0)","padding":"0px"});
+});
+
+$(".savebtn").click(function(){
+var outerdiv=$(this).parent().parent().parent();
+var label=$(this).parent().find(".inputlabelfield").val();
+if(label==""){
+alert("Please fill the label of this label :"+ outerdiv.find(".labelclass").text());
+return;
+}
+if(outerdiv.find(".minfield").val()==""){
+  alert("Please fill the min field");
+  return false;
+}
+if(outerdiv.find(".maxfield").val()==""){
+  alert("Please fill the max field");
+  return false;
+}
+if(btnvalue==""){
+  alert("Please fill the value of button");
+  return;
+}  
+outerdiv.find(".btnclass").text(label);   //for button
+var btntype=$(this).parent().find(".btntypeval").find(":selected").text(); // for button
+outerdiv.find(".btnclass").attr('type',btntype); // for button
+var btnvalue=$(this).parent().find(".btnvalfield").val();
+if(btnvalue==""){
+  alert("Please fill the value of button");
+  return;
+} 
+if(outerdiv.find(".inputnameclass").val()=="" || outerdiv.find(".inputvalueclass").val()==""){
+  alert("Please fill the data label and value carefully");
+  return false;
+}
+var placeholder=$(this).parent().find(".placeholderfield").val();
+if(placeholder==""){
+alert("Please fill the placeholder of this label :"+ outerdiv.find(".labelclass").text());
+return;
+}
+outerdiv.find(".btnclass").attr('value',btnvalue); // for button
+outerdiv.find(".labelclass").text(label); // for other input field 
+if($(this).parent().find(".checkboxfield").prop('checked')==true){
+outerdiv.find(".inputclass").prop("required",true);
+}
+outerdiv.find(".inputclass").attr("placeholder",placeholder);
+var classes=$(this).parent().find(".classesfield").val();
+if(classes!=undefined){
+var arrayofclass=classes.split(" ");
+for(let i=0;i<arrayofclass.length;i++){
+outerdiv.find(".inputclass").addClass(arrayofclass[i]);
+outerdiv.find(".btnclass").addClass(arrayofclass[i]);
+outerdiv.find("h1").addClass(arrayofclass[i]);
+outerdiv.find("p").addClass(arrayofclass[i]);
+outerdiv.find("select").addClass(arrayofclass[i]);
+}
+}
+var minvalue=outerdiv.find(".minfield").val();
+var maxvalue=outerdiv.find(".maxfield").val();
+outerdiv.find(".rangeclass").attr("min",minvalue);
+outerdiv.find(".rangeclass").attr("max",maxvalue);
+$(this).parent().find(".tableclass").find("tr").each(function(){
+  if($(this).find(".inputnameclass").val()!=undefined){
+    labelvalue=$(this).find(".inputnameclass").val();
+    value=$(this).find(".inputvalueclass").val();
+    if(outerdiv.hasClass("checkboxclass")==true)
+    {
+    outerdiv.find(".formwrapper div").append('<input type="checkbox" id="checkboxfield" value="'+value+'" class="mr-1 checkboxinputfield">'+
+    '<label for="checkboxfield" class="formlabelfield checkboxlabelfield">'+labelvalue+'</label><br>');
+    }
+    else if(outerdiv.hasClass("radiobtnclass")==true){
+      outerdiv.find(".formwrapper div").append('<input type="radio" id="radioboxfield" value="'+value+'" class="mr-1 radiobtninputfield" name="radioname">'+
+    '<label for="radioboxfield" class="formlabelfield radiobtnlabelfield">'+labelvalue+'</label><br>');
+    }
+    else{
+        outerdiv.find(".formwrapper div select").append('<option value="'+value+'" class="optionfield">'+labelvalue+'</option>');
+    }
+  }
+  else{       if(outerdiv.hasClass("selectboxclass")==true){
+                  outerdiv.find(".formwrapper div select").html("");
+                }
+              else{
+                outerdiv.find(".formwrapper div").html("");
+              }
+  }
+});
+});
+$(".clearbtn").click(function(){
+var outerdiv=$(this).parent().parent().parent();
+outerdiv.find(".minfield").val("");
+outerdiv.find(".maxfield").val("");
+$(this).parent().find(".inputlabelfield").val("");
+$(this).parent().find(".checkboxfield").prop('checked',false);
+$(this).parent().find(".placeholderfield").val("");
+$(this).parent().find(".classesfield").val("");
+$(this).parent().parent().parent().find(".labelclass").text("Label :");
+$(this).parent().parent().parent().find(".inputclass").prop("required",false);
+$(this).parent().parent().parent().find(".inputclass").attr("placeholder","");
+$(this).parent().parent().parent().find(".btnvalfield").val(""); // for button
+$(this).parent().find(".tableclass").find("tr").each(function(){
+  if($(this).find(".inputnameclass").val()!=undefined){
+    if(outerdiv.hasClass("checkboxclass")==true)
+    {
+        $("tr td input").val("");
+    }
+    else if(outerdiv.hasClass("radiobtnclass")==true){
+        $("tr td input").val("");
+    }
+    else{
+        $("tr td input").val("");
+    }
+  }
+
+});
+});
+$(".addoption").click(function(){
+$(this).parent().find(".tableclass").append('</tr>'+
+'<tr>'+
+'<td><input type="text" class="w-100 border inputnameclass"></td>'+
+'<td><input type="text" class="w-100 border inputvalueclass"></td>'+
+'</tr>');
+});
+}
+    function toShowData(id){
+        var text=$("#"+id).text();
+        switch (text) {
+              case "Autocomplete":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+              '<div class="col-12">'+
+                  '<div class="formwrapper">'+
+                  '<form class="formclass" name="autocompleteform">'+
+                    '<label for="autocomplete-field" class="labelclass txtclass">Autocomplete</label><br>'+
+                    '<input list="autocomplete-list" name="autocomplete-field" id="autocomplete-field" autocomplete="on" class="inputclass">'+ 
+                    '<i class="editicon"></i>'+
+                    '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                  '</form>'+
+                  '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield" placeholder=""><br>'+ 
+                    '<label for="requirefield">Required :</label>'+ 
+                    '<input type="checkbox" id="requirefield" name="requirefield" style="width:10%" class="checkboxfield"><br>'+ 
+                    '<label for="placeholderfield">Placeholder :</label>'+ 
+                    '<input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>'+   
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="mt-1 classesfield">'+  
+                    '</form>'+ 
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Button":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+                '<div class="col-12">'+
+                '<div class="formwrapper">'+
+                '<form class="formclass" name="buttonform">'+
+                  '<button class=" btnclass txtclass" disabled value="abc">Button</button><br>'+
+                  '<i class="editicon"></i>'+
+                  '<i class="crossicon"></i>'+
+                  '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                '</form>'+
+                '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+
+                    '<label for="btnvaluefield" class="mt-1">Value :</label>'+  
+                    '<input type="text" id="btnvaluefield" name="btnvaluefield" class="btnvalfield"><br>'+
+                    '<label for="btntype" class="mt-1">Type :</label>'+
+                      '<select name="btntype" id="btntype" class="btntypeval">'+
+                        '<option value="Submit">Submit</option>'+
+                        '<option value="Reset">Reset</option>'+
+                        '<option value="Button">Button</option>'+
+                      '</select><br>'+
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="mt-0 classesfield">'+  
+                    '</form>'+ 
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Checkbox":
+                     $("#droppable").append('<div class="row checkboxclass" style="padding:10px;">'+
+                '<div class="col-12">'+
+                '<div class="formwrapper">'+
+                '<form class="formclass" name="checkboxform">'+
+                  '<label class="labelclass checkboxclass txtclass">Checkbox Group</label>'+
+                  '<i class="editicon"></i>'+
+                  '<i class="crossicon"></i>'+
+                  '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                '</form>'+
+                '<div style="height:auto;" class="labelvaluepaircontainer"></div>'+
+                '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+              '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+ 
+                    '<form>'+
+                    '<label style="display:inline-block; vertical-align: top;" class="mt-2">Options :'+
+                    '</label>'+
+                    '<table class="d-inline-block mt-1 tableclass" style="padding:4px;" id = "collapseTable">'+
+                    '<tr style="background-color:rgba(128,128,128,0.3);">'+
+                    '<th>Label</th>'+
+                    '<th>Value</th>'+
+                    '</tr>'+
+                    '<tr>'+
+                    '<td><input type="text" class="w-100 border inputnameclass"></td>'+
+                    '<td><input type="text" class="w-100 border inputvalueclass"></td>'+
+                    '</tr>'+
+                    '</table>'+
+                    '</form>'+ 
+                    '<i class="fas fa-plus addoption" style="position:absolute;bottom:80px;right:60px;font-size:20px;box-shadow:2px 2px 2px 2px rgba(0,0,0,0.1);"></i>'+
+                '<button type="button" class="btn mt-1 btn-common-class closebtn mt-1">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn mt-1">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn mt-1">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Date field":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+                    '<div class="col-12">'+
+                      '<div class="formwrapper">'+
+                    '<form class="formclass" name="Datefieldform">'+
+                      '<label for="date-field" class="labelclass txtclass">Date Field</label><br>'+
+                      '<input type="date" name="date" id="date-field" class="date-field inputclass">'+
+                      '<i class="editicon"></i>'+
+                      '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                    '</form>'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+                     '<div style="padding:25px;">'+
+                      '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+ 
+                    '<label for="requirefield">Required :</label>'+ 
+                    '<input type="checkbox" id="requirefield" name="requirefield" class="checkboxfield" style="width:10%"><br>'+    
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="classesfield">'+  
+                      '</form>'+ 
+                      '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+ 
+                      '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+ 
+                      '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+ 
+                    '</div>'+  
+                    '</div>'+  
+                      '</div>'); 
+                    break;
+              case "File Upload":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+                  '<div class="col-12">'+
+                  '<div class="formwrapper">'+
+                  '<form class="formclass" name="fileuploadform">'+
+                    '<label for="file-field" class="labelclass txtclass">File Field</label><br>'+
+                    '<input type="file" name="file" id="file-field" class="file-field inputclass">'+
+                    '<i class="editicon"></i>'+
+                    '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                  '</form>'+
+                  '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+ 
+                    '<label for="requirefield">Required :</label>'+ 
+                    '<input type="checkbox" id="requirefield" name="requirefield" class="checkboxfield" style="width:10%"><br>'+   
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="classesfield">'+  
+                    '</form>'+ 
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Header":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+                  '<div class="col-12">'+
+                  '<div class="formwrapper">'+
+                  '<form class="formclass" name="headerform">'+
+                    '<h1 class="labelclass txtclass inputclass" style="font-size:40px;background-color:inherit;padding:10;margin:0;color: #444;">Header</h1><br>'+
+                    '<i class="editicon"></i>'+
+                    '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                  '</form>'+
+                  '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="mt-1 classesfield">'+  
+                    '</form>'+ 
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Range":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+                  '<div class="col-12">'+
+                  '<div class="formwrapper">'+
+                  '<form class="formclass" name="rangeform">'+
+                    '<label for="range-field" class="labelclass txtclass">Range :</label><br>'+
+                    '<input type="range" name="range" id="range-field" class="rangeclass inputclass">'+
+                    '<i class="editicon"></i>'+
+                    '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                  '</form>'+
+                  '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield">Label :</label>'+
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+
+                    '<label for="minfield">Min :</label>'+
+                    '<input type="number" id="minfield" name="minfield" class="minfield"><br>'+
+                    '<label for="maxfield">Max :</label>'+
+                    '<input type="number" id="maxfield" name="maxfield" class="maxfield"><br>'+
+                    '</form>'+
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+
+              '</div>'+
+              '</div>'+
+              '</div>');
+                break;
+              case "Number":
+                      $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+              '<div class="col-12">'+
+                  '<div class="formwrapper">'+
+                  '<form class="formclass" name="numberform">'+
+                    '<label for="number-field" class="labelclass txtclass">Number</label><br>'+
+                    '<input type="number" name="number" id="number-field" class="number-field inputclass">'+
+                    '<i class="editicon"></i>'+
+                    '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                  '</form>'+
+                  '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+ 
+                    '<label for="requirefield">Required :</label>'+ 
+                    '<input type="checkbox" id="requirefield" name="requirefield" class="checkboxfield" style="width:10%"><br>'+ 
+                    '<label for="placeholderfield">Placeholder :</label>'+ 
+                    '<input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>'+   
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="mt-1 classesfield">'+  
+                    '</form>'+ 
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Paragraph":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+              '<div class="col-12">'+
+                  '<div class="formwrapper">'+
+                  '<form class="formclass" name="paragraphform">'+
+                    '<p class="labelclass txtclass" style="margin:0;height:auto;word-wrap: break-word;padding:30px;">Paragraph</p><br>'+
+                    '<i class="editicon"></i>'+
+                    '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                  '</form>'+
+                  '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield" style="vertical-align: top;">Content :</label>'+
+                    '<textarea class="inputlabelfield" rows="4" cols="50"></textarea><br>'+
+                    '<label for="requirefield">Required :</label>'+
+                    '<input type="checkbox" id="requirefield" name="requirefield" style="width:10%" class="checkboxfield"><br>'+
+                    '<label for="placeholderfield">Placeholder :</label>'+
+                    '<input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>'+
+                    '<label for="classfield">Class :</label>'+
+                    '<input type="text" id="classfield" name="classfield" class="mt-1 classesfield">'+
+                    '</form>'+
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+
+              '</div>'+
+              '</div>'+
+              '</div>');
+                break;
+              case "Radio Group":
+                       $("#droppable").append('<div class="row radiobtnclass" style="padding:10px;">'+
+                '<div class="col-12">'+
+                '<div class="formwrapper">'+
+                '<form class="formclass" name="radiogroupform">'+
+                  '<label class="labelclass radiobtnclass txtclass">Radiobutton</label>'+
+                  '<i class="editicon"></i>'+
+                  '<i class="crossicon"></i>'+
+                  '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                '</form>'+
+                '<div style="height:auto;" class="labelvaluepaircontainer"></div>'+
+                '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+              '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+ 
+                    '<form>'+
+                    '<label style="display:inline-block; vertical-align: top;" class="mt-2">Options :'+
+                    '</label>'+
+                    '<table class="d-inline-block mt-1 tableclass" style="padding:4px;" id = "collapseTable">'+
+                    '<tr style="background-color:rgba(128,128,128,0.3);">'+
+                    '<th>Label</th>'+
+                    '<th>Value</th>'+
+                    '</tr>'+
+                    '<tr>'+
+                    '<td><input type="text" class="w-100 border inputnameclass"></td>'+
+                    '<td><input type="text" class="w-100 border inputvalueclass"></td>'+
+                    '</tr>'+
+                    '</table>'+
+                    '</form>'+ 
+                    '<i class="fas fa-plus addoption" style="position:absolute;bottom:80px;right:60px;font-size:20px;box-shadow:2px 2px 2px 2px rgba(0,0,0,0.1);"></i>'+
+                '<button type="button" class="btn mt-1 btn-common-class closebtn mt-1">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn mt-1">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn mt-1">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Select":
+                     $("#droppable").append('<div class="row selectboxclass" style="padding:10px;">'+
+                '<div class="col-12">'+
+                '<div class="formwrapper">'+
+                '<form class="formclass" name="selectform">'+
+                  '<label for="select-field" class="labelclass selectboxclass txtclass">SelectBoxes</label>'+
+                  '<i class="editicon"></i>'+
+                  '<i class="crossicon"></i>'+
+                  '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                '</form>'+
+                '<div style="height:auto;">'+
+                '<select name="select-field" id="select-field" style="width:30%;" class="selectfieldclass">'+
+                '</select>'+
+                '</div>'+
+                '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+              '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+ 
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="mt-1 classesfield">'+
+                    '<form>'+
+                    '<label style="display:inline-block; vertical-align: top;" class="mt-2">Options :'+
+                    '</label>'+
+                    '<table class="d-inline-block mt-1 tableclass" style="padding:4px;" id = "collapseTable">'+
+                    '<tr>'+
+                    '<th>Label</th>'+
+                    '<th>Value</th>'+
+                    '</tr>'+
+                    '<tr>'+
+                    '<td><input type="text" class="w-100 border inputnameclass" ></td>'+
+                    '<td><input type="text" class="w-100 border inputvalueclass" ></td>'+
+                    '</tr>'+
+                    '</table>'+
+                    '</form>'+ 
+                    '<i class="fas fa-plus addoption" style="position:absolute;bottom:80px;right:60px;font-size:20px;box-shadow:2px 2px 2px 2px rgba(0,0,0,0.1);"></i>'+
+                '<button type="button" class="btn mt-1 btn-common-class closebtn mt-1">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn mt-1">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn mt-1">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Text Field":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+              '<div class="col-12">'+
+                  '<div class="formwrapper">'+
+                  '<form class="formclass" name="textfieldform">'+
+                    '<label for="textfield" class="labelclass txtclass">Text Field</label><br>'+
+                    '<input type="text" name="textfield" id="textfield" class="inputclass">'+ 
+                    '<i class="editicon"></i>'+
+                    '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                  '</form>'+
+                  '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+ 
+                    '<label for="requirefield">Required :</label>'+ 
+                    '<input type="checkbox" id="requirefield" name="requirefield" style="width:10%" class="checkboxfield"><br>'+ 
+                    '<label for="placeholderfield">Placeholder :</label>'+ 
+                    '<input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>'+   
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="mt-1 classesfield">'+  
+                    '</form>'+ 
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+              case "Text Area":
+                    $("#droppable").append('<div class="row" style="padding:10px;">'+ 
+              '<div class="col-12">'+
+                  '<div class="formwrapper">'+
+                  '<form class="formclass" name="textareaform">'+
+                    '<label for="textarea-field" class="labelclass txtclass">TextArea Field</label><br>'+
+                    '<textarea class="inputclass" rows="4" cols="50"></textarea>'+ 
+                    '<i class="editicon"></i>'+
+                    '<i class="crossicon"></i>'+
+                    '<i class="fas fa-arrows-alt handle" style="position:absolute;left:0px;top:0px;"></i>'+
+                  '</form>'+
+                  '</div>'+
+              '</div>'+
+              '<div class="col-12 sideformclass pb-1" style="display:none;">'+
+              '<div style="padding:25px;">'+
+                    '<form>'+
+                    '<label for="labelfield">Label :</label>'+  
+                    '<input type="text" id="labelfield" name="labelfield" class="inputlabelfield"><br>'+ 
+                    '<label for="requirefield">Required :</label>'+ 
+                    '<input type="checkbox" id="requirefield" name="requirefield" style="width:10%" class="checkboxfield"><br>'+ 
+                    '<label for="placeholderfield">Placeholder :</label>'+ 
+                    '<input type="text" id="placeholderfield" name="placeholderfield" class="placeholderfield"><br>'+   
+                    '<label for="classfield">Class :</label>'+  
+                    '<input type="text" id="classfield" name="classfield" class="mt-1 classesfield">'+  
+                    '</form>'+ 
+                '<button type="button" class="btn mt-1 btn-common-class closebtn">Close</button>'+ 
+                '<button type="button" class="btn mx-1 mt-1 btn-common-class clearbtn">Clear</button>'+ 
+                '<button type="button" class="btn mt-1  btn-common-class savebtn">Save</button>'+ 
+              '</div>'+  
+              '</div>'+  
+              '</div>');
+                break;
+    }
+    }    
+</script>
+</body>
+</html>

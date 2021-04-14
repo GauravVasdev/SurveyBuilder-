@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/613a7f3344.js" crossorigin="anonymous"></script>
+<style>
+    *{
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 1vw;
+        line-height: 1.5;
+        color: #444;
+        font-style: normal;
+        font-weight:lighter;
+      }
+  .wrapper{
+    background-color: rgba(238,238,238);
+    height:auto;
+    width:700px;
+    margin:auto;
+    margin-top:100px;
+    position:relative;
+    border: 2px solid rgba(126,126,126);
+    padding-top:100px;
+    padding-left:50px;
+    padding-right:50px;
+  }
+  .rounded-circle{
+    width:180px;
+    height:100px;
+    position:absolute;
+    top:-50px;
+    left:250px;
+    background-color: white;
+    border-bottom:5px solid rgba(126,126,126);
+  }
+  .labelclass{
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight:lighter;
+  }
+  .inputclass{
+    font-size: 20px;
+    padding:10px;
+    height:auto;
+  }
+  .penclass{
+    position:absolute;
+    top:-30px;
+    left:320px;
+    font-size: 55px;
+    color:rgba(126,126,126);
+    z-index:2;
+  }
+</style>
+</head>
+<body>
+  <fieldset class="fieldsetclass">
+          <div class="wrapper">
+            <div class="rounded-circle"></div>
+              <i class="fas fa-pen penclass"></i>
+                <div style="overflow:auto;">
+                  {% for obj_ in listofcontent %}
+                    {% if obj_.type == "Autocomplete" %}
+                      <form name="Autocompleteform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                          <label for="autocomplete-field" class="labelclass txtclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+                          <input name="autocomplete-field" autocomplete="on" id="autocomplete-field" list="autocomplete-list" name="autocomplete-field"
+                          class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} form-control inputclass" {% endif %} {% endfor %}
+                          placeholder={% for key,value in obj_.items %}{% if key == "placeholder" %} "{{value}}" {% endif %} {% endfor %}
+                          {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+                          >
+                        </div>
+                      </form>
+                    {% endif %}
+                    {% if obj_.type == "Button" %}
+                      <form name="buttonform">
+                        <button type="button" style="margin-bottom:40px;"
+                        type={% for key,value in obj_.items %}{% if key == "type" %} "{{value}}" {% endif %} {% endfor %}
+                        value={% for key,value in obj_.items %}{% if key == "value" %} "{{value}}" {% endif %} {% endfor %}
+                        class={% for key,value in obj_.items %}{% if key == "classes" %} "btn {{value}}" {% endif %} {% endfor %}>{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</button><br>
+                      </form>
+                    {% endif %}
+
+                    {% if obj_.type == "Checkbox" %}
+                      <form name="checkboxform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                            <label class="labelclass">{% for key,value in obj_.items%}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+                            {% for key,value in obj_.items %}
+                                {% if key == "labelvaluepairobj" %}
+                                    {% for keys,values in obj_.labelvaluepairobj.items %}
+                                        <div class="form-check" style="margin-bottom:5px;"><label class="form-check-label labelofcheck"><input type="checkbox" class="form-check-input chekbocinputclass" value="{{values}}">{{keys}}</label>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                      </form>
+                    {% endif %}
+
+
+                    {% if obj_.type == "Datefield" %}
+                      <form name="datefieldform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                            <label class="labelclass" for="date-field">{% for key,value in obj_.items%}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+                            <input type="date" id="date-field"
+                            class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} form-control inputclass" {% endif %} {% endfor %}
+                            {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+                            >  
+                        </div>
+                      </form>  
+                    {% endif %}
+                    
+                    {% if obj_.type == "Filefield" %}
+                      <form name="filefieldform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                          <label class="labelclass" for="file-field">{% for key,value in obj_.items%}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+                          <input type="file" id="file-field" style="height:auto;"
+                          class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} form-control inputclass" {% endif %} {% endfor %}
+                          {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+                          >  
+                        </div>
+                      </form>
+                        
+                    {% endif %}
+
+                    {% if obj_.type == "Headerfield" %}
+                      <form name="headerfieldform">
+                        <div class="" style="margin-bottom:40px;">
+                          <h1 class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}}" {% endif %} {% endfor %}
+                          {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+                          style="font-size:40px;background-color:inherit;padding:10;margin:0;color: #444;height:auto;"
+                          > {% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</h1>
+                        </div>
+                      </form>  
+                    {% endif %}
+
+                    {% if obj_.type == "Rangefield" %}
+                      <form name="rangefieldform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                          <label for="range-field" class="labelclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+                          <input type="range" class="form-control-range inputclass" id="range-field" min={% for key,value in obj_.items %}{% if key == "min" %} "{{value}}" {% endif %} {% endfor %}
+                          max={% for key,value in obj_.items %}{% if key == "max" %} "{{value}}" {% endif %} {% endfor %}>
+                        </div>
+                      </form>
+                    {% endif %}
+
+                    {% if obj_.type == "Numberfield" %}
+                      <form name="numberfieldform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                          <label for="number-field" class="labelclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label><br>
+                          <input type="number" id="number-field" class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} form-control inputclass" {% endif %} {% endfor %}
+                          placeholder={% for key,value in obj_.items %}{% if key == "placeholder" %} "{{value}}" {% endif %} {% endfor %}
+                          {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}>
+                        </div>
+                      </form>
+                    {% endif %}
+
+                    {% if obj_.type == "Paragraphfield" %}
+                      <form name="paragraphfieldform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                          <p style="margin:0;height:auto;word-wrap: break-word;padding:30px;"
+                          class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} labelclass txtclass" {% endif %} {% endfor %}
+                          >{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</p><br>
+                        </div>
+                      </form>
+                    {% endif %}
+
+                    {% if obj_.type == "Radiofield" %}
+                      <form name="radiofieldform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                          <label class="labelclass">{% for key,value in obj_.items%}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+                          {% for key,value in obj_.items %}
+                              {% if key == "labelvaluepairobj" %}
+                                  {% for keys,values in obj_.labelvaluepairobj.items %}
+                                      <div class="form-check" style="margin-bottom:5px;">
+                                          <label class="form-check-label labelofradio"><input type="radio" class="form-check-input radiobtnclass"  value="{{values}}" name="abc">{{keys}}</label>
+                                      </div>
+                                  {% endfor %}
+                              {% endif %}
+                          {% endfor %}
+                        </div>
+                      </form>
+                    {% endif %}
+
+                    {% if obj_.type == "Selectfield" %}
+                      <form name="selectfieldform">
+                        <div class="form-group" style="margin-bottom:40px;">
+                          <label for="select-field" class="labelclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+                          <select name="select-field" id="select-field"
+                          class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} form-control selectfieldclass" {% endif %} {% endfor %}>
+                                {% for key,value in obj_.items %}
+                                  {% if key == "labelvaluepairobj" %}
+                                    {% for keys,values in obj_.labelvaluepairobj.items %}
+                                          <option value="{{values}}" class="optionfield">{{keys}}</option>
+                                    {% endfor %}
+                                  {% endif %}
+                                {% endfor %}
+                           </select>
+                        </div>
+                      </form>
+                    {% endif %}
+
+                    {% if obj_.type == "textfield" %}
+                      <form name="textfieldform">
+                       <div class="form-group" style="margin-bottom:40px;">
+                            <label for="textfield" class="labelclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+                            <input id="textfield"
+                            class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} form-control inputclass" {% endif %} {% endfor %}
+                            placeholder={% for key,value in obj_.items %}{% if key == "placeholder" %} "{{value}}" {% endif %} {% endfor %}
+                            {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+                            >
+                       </div>
+                      </form>
+                    {% endif %}
+
+                    {% if obj_.type == "textareafield" %}
+                        <form name="textareafieldform">
+                          <div class="form-group" style="margin-bottom:40px;">
+                              <label for="textareafield" class="labelclass">{% for key,value in obj_.items %}{% if key == "label" %}{{value}}{% endif %}{% endfor %}</label>
+                              <<textarea rows="4" cols="50" id="textareafield"
+                              class={% for key,value in obj_.items %}{% if key == "classes" %} "{{value}} form-control inputclass" {% endif %} {% endfor %}
+                              placeholder={% for key,value in obj_.items %}{% if key == "placeholder" %} "{{value}}" {% endif %} {% endfor %}
+                              {% for key,value in obj_.items %}{% if key == "required" %} {% if value == "yes" %}{{key}}{% endif %}{% endif %} {% endfor %}
+                              ></textarea>
+                          </div>
+                        </form>
+                    {% endif %}
+
+                  {% endfor %}
+                  <button class="btn btn-primary saveresponsebtn" style="width:30%;float:right;margin-bottom:20px;background-color:rgba(128,128,128);">Save Response</button>
+                </div>
+           </div>
+      </fieldset>
+</body>
+<script>
+  $(function(){
+      $(".saveresponsebtn").click(function(){
+        var responsecontent=[]
+          $(this).parent().find("form").each(function(){
+              if($(this).attr("name")=="Autocompleteform"){
+                var label=$(this).find(".labelclass").text();
+                var value=$(this).find(".inputclass").val();
+                responsecontent.push({[label]:value});
+              }
+              if($(this).attr("name")=="buttonform"){
+
+              }
+              if($(this).attr("name")=="checkboxform"){
+                var label=$(this).find(".labelclass").text();
+                let=checkboxlist=[]
+                $(this).find(".form-check").each(function(){
+                  if($(this).find(".chekbocinputclass").prop("checked")){
+                    //var labelofcheckbox=$(this).find(".labelofcheck").text()
+                    var valueofcheckbox=$(this).find(".chekbocinputclass").val();
+                    checkboxlist.push(valueofcheckbox);
+                  }
+                });
+                responsecontent.push({[label]:checkboxlist});
+              }
+              if($(this).attr("name")=="datefieldform"){
+                var label=$(this).find(".labelclass").text();
+                var value=$(this).find(".inputclass").val();
+                responsecontent.push({[label]:value});
+              }
+              if($(this).attr("name")=="filefieldform"){
+                var label=$(this).find(".labelclass").text();
+                var value=$(this).find(".inputclass").val();
+                responsecontent.push({[label]:value});
+              }
+              if($(this).attr("name")=="headerfieldform"){
+              }
+              if($(this).attr("name")=="rangefieldform"){
+                var label=$(this).find(".labelclass").text();
+                var value=$(this).find(".inputclass").val();
+                responsecontent.push({[label]:value});
+              }
+              if($(this).attr("name")=="numberfieldform"){
+                var label=$(this).find(".labelclass").text();
+                var value=$(this).find(".inputclass").val();
+                responsecontent.push({[label]:value});
+              }
+              if($(this).attr("name")=="paragraphfieldform"){
+              }
+              if($(this).attr("name")=="radiofieldform"){
+                let label=$(this).find(".labelclass").text();
+                let radiobtnlist=[]
+                $(this).find(".form-check").each(function(){
+                  var formcheckfield=$(this);
+                  if($(this).find(".radiobtnclass").prop("checked")){
+                    //let labelofradio=formcheckfield.find(".labelofradio").text()
+                    let valueofradio=formcheckfield.find(".radiobtnclass").val();
+                    radiobtnlist.push(valueofradio);
+                  }
+                });
+                responsecontent.push({[label]:radiobtnlist});
+                console.log(responsecontent)
+              }
+              if($(this).attr("name")=="selectfieldform"){
+                var label=$(this).find(".labelclass").text();
+                var selectedvalue=$(this).find(".selectfieldclass").children("option:selected").val();
+                responsecontent.push({[label]:selectedvalue});
+              }
+              if($(this).attr("name")=="textfieldform"){
+                var label=$(this).find(".labelclass").text();
+                var value=$(this).find(".inputclass").val();
+                responsecontent.push({[label]:value});
+              }
+              if($(this).attr("name")=="textareafieldform"){
+                var label=$(this).find(".labelclass").text();
+                var value=$(this).find(".inputclass").val();
+                responsecontent.push({[label]:value});
+              }
+          });
+          $.ajax({
+            type: 'post',
+            url: "{% url 'ajaxresponse' %}",
+            data: {'responsecontent':JSON.stringify(responsecontent),'idofform':'{{id}}','PersonID':'{{PersonID}}','NameofSurvey':'{{NameofSurvey}}' },  //JSON.stringify(obj)
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            async: true,
+            success: function (response) {
+                console.log(response);
+                $("input").val("");
+                alert("Your response has recorded .");
+                $(".fieldsetclass").attr('disabled','disabled');
+                //window.location.href = "http://127.0.0.1:8000/showresponse";
+            }
+       }).done(function (data) {
+            console.log(data);
+        });
+      });
+  });
+</script>
+</html>

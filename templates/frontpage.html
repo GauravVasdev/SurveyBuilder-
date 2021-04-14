@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/613a7f3344.js" crossorigin="anonymous"></script>
+</head>
+<style>
+  *{
+    box-sizing: border-box;
+    font-family: verdana;
+  }
+  .navwrapper{
+    color:black;
+    width:70%;
+    margin:auto;
+    background-color:white;
+    height:170px;
+  }
+  .navlogo{
+    color:black;
+    line-height: 120px;
+    -ms-transform: scaleY(1.1);
+     /* IE 9 */transform: scaleY(1.5);
+     letter-spacing:1px;
+     word-spacing:4px;
+     font-weight:bold;
+     font-family: verdana;
+  }
+  .frontloginbtn{
+    border:1px solid rgba(0,0,0,0.1);
+  }
+  .contentwrapper{
+    height:auto;
+    width:75%; 
+    padding-top:80px;
+    margin:auto;
+  }
+  .leftsidecol{
+    padding-left:115px;
+    display:table;
+    height:500px;
+    padding-top:70px;
+  }
+  .leftsidecolinnerheading{
+    display: table-cell;
+    vertical-align:middle;
+    font-size: 3.3vw;
+    font-weight:normal;
+    letter-spacing:0.5px;
+  }
+  .leftsidecolinnerheading p{
+    line-height: 75px;
+  }
+  .leftsidecolinnercontent{
+    font-size:1.5vw;
+    padding-top:10px;
+    font-weight: lighter;
+  }
+  .rightsidecol{
+    padding:30px;
+  }
+  .rightsideimgcol{
+    float:right;
+    height:500px;
+    width:100%
+  }
+  .jumbotypedata{
+    margin-top: 100px;
+    padding-top:45px;
+    margin-bottom: 200px;
+  }
+  .jumbotypeinnerdiv{
+    width:50%;
+    text-align: center;
+    margin:auto;
+  }
+  .jumbotypeinnerheading{
+    padding-top:20px;
+  }
+  .imagebelowjumbo{
+    background-image: url("{% static 'Capture2.PNG' %}");
+    background-repeat: no-repeat;
+    background-size:contain;
+    height:670px;
+    }
+    .registerdiv{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      width:600px;
+      display: none;
+    }
+    .lastcontainter{
+      padding-top:100px;
+    }
+    .lastcol4{
+      height:200px;
+    }
+    .lastcol4 p{
+      padding:30px;
+      padding-left:35px;
+    }
+    .fa-fa-listtagclass{
+      float:left;
+      padding:5px;
+      color:rgba(0,0,0,0.5);
+    }
+    .fa-fa-listtagclass h4{
+      padding:2px;
+      color:rgba(0,0,0,0.4);
+    }
+    .crossbtnndregisterinloginform{
+      position:absolute;
+      top:10px;
+      right:10px;
+      font-size:30px;
+    }
+    .loginformcontainer{
+      width:100%;
+      overflow: auto;
+      background-color: white;
+    }
+    .loginndregisterformheading{
+      color:rgb(128,128,128);
+      font-weight: normal;
+    }
+    .loginndregisterradiobtno{
+      float:left;
+      clear: both;
+    }
+    .loginndregisterradiobtnlabel{
+      float:left;
+    }
+    .loginndregisterradio{
+      float:left;
+    }
+    .btnsdiv{
+      text-align: right;
+      float:right;
+    }
+</style>
+<script>
+  $(function(){
+    $(".crossbtn").click(function(){
+      $(this).parent().parent().hide();
+      $(".wrapperclass").css("opacity", "1");
+      $(".wrapperclass").removeAttr("disabled");
+    });
+    $(".cnclbtn").click(function(){
+      $(this).parent().parent().parent().hide();
+      $(".wrapperclass").css("opacity", "1");
+      $(".wrapperclass").removeAttr("disabled");
+    });
+    $(".frontloginbtn").click(function(){
+        $(".loginform").show();
+        $(".wrapperclass").attr("disabled","disabled");
+        $(".wrapperclass").css("opacity", "0.1");
+      });
+    $(".frontregisterbtn").click(function(){
+        $(".registerdiv").show();
+        $(".wrapperclass").attr("disabled","disabled");
+        $(".wrapperclass").css("opacity", "0.1");
+    });
+  });
+</script>
+<body>
+<div class="navwrapper pt-4">
+    <nav class="navbar navbar-expand-md">
+      <a class="navbar-brand navlogo" href="#">Smart Survey</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="loginformforsurveybuilder" class="btn btn-lg btn-light frontloginbtn mr-2">Login</a>
+          </li>
+          <li class="nav-item">
+            <a href="Registerforsurveybuilder" class="btn btn-lg btn-dark frontregisterbtn">Register</a>
+          </li>  
+        </ul>
+      </div>  
+    </nav>
+</div>
+<div class="contentwrapper">
+  <div class="row">
+    <div class="col-6 leftsidecol">
+      <div class="leftsidecolinnerheading"><p>A survey maker that gets results</p>
+        <div class="leftsidecolinnercontent">
+          Conduct research, boost your brand, or just get to know an audience. Our online survey creator is fast, free and fully customizable.
+       </div>
+       <a href="loginformforsurveybuilder" class="btn btn-lg btn-dark mt-5 frontloginbtn">Create a Suvery</a>
+      </div>
+    </div>
+    <div class="col-6 rightsidecol">
+        <img src="{% static 'PSimage.PNG' %}" class="rightsideimgcol"></img>
+    </div>
+  </div>
+</div>
+<div class="container-fluid jumbotypedata">
+    <div class="jumbotypeinnerdiv">
+    <h1 class="jumbotypeinnerheading">What makes SmartSurvey right for you?</h1>      
+    <p>We will help you collect the information you need quickly and easily. Trust us to safeguard your data and provide the support you need, when you need it.</p>
+    </div>     
+</div>
+<div class="imagebelowjumbo" style="margin:0px;">
+</div>
+<div class="container">
+  <div class="row lastcontainter">
+    <div class="col-4 lastcol4">
+      <i class="fas fa-list fa-fa-listtagclass mr-2"></i><h4>Flexible</h4>
+      <p>Surveys, questionnaires, online forms, consultations, quizzes, you name it, we have it.</p>
+    </div>
+    <div class="col-4 lastcol4">
+      <i class="fas fa-list fa-fa-listtagclass mr-2"></i><h4>Nothing to install</h4>
+       <p>No complicated installations or downloads, just sign up and create surveys through your browser.</p>
+    </div>
+    <div class="col-4 lastcol4">
+       <i class="fas fa-list fa-fa-listtagclass mr-2"></i><h4>Easy to use</h4>
+       <p>Intuitive user-led design, with easy to follow step-by-step guides.</p>
+    </div>
+    <div class="col-4 lastcol4">
+       <i class="fas fa-list fa-fa-listtagclass mr-2"></i><h4>Secure</h4>
+       <p>Data encrypted during transit and at rest. ISO27001 and Cyber Security Essentials Plus certified.</p>
+    </div>
+    <div class="col-4 lastcol4">
+       <i class="fas fa-list fa-fa-listtagclass mr-2"></i><h4>Your data in one place</h4>
+       <p>Connect your data with APIs, Zapier, Salesforce, Google Analytics, and more.</p>
+    </div>
+    <div class="col-4 lastcol4">
+       <i class="fas fa-list fa-fa-listtagclass mr-2"></i><h4>Support</h4>
+       <p>Help when you need it, through email and telephone.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
